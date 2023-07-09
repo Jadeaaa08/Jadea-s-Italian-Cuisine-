@@ -1,17 +1,10 @@
 using System;
-
-using System.Linq;
-
+using System.Linq
 using System.Collections.Generic;
-
-
-
-
 
 public class Menu 
 
 {         
-
    public List<Item> items;
 
         public Menu()
@@ -23,5 +16,6 @@ public class Menu
         {
             items.Add(item);     
 
-}       }       
+        }     
+}       
 
