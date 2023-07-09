@@ -1,25 +1,14 @@
 using System;
-
 using System.Linq;
-
 using System.Collections.Generic;
 
-
-
-
-
-
-
 public class Item 
-
-{         
-
+{       
         public string name;
         public double price;
         public bool availability;
         public bool bestSeller;
         public double discount;
         public string promo;      
-
 }
 
