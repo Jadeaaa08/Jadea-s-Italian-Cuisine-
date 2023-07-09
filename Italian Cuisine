@@ -1,0 +1,213 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Welcome to Jadea's Italian Cuisine!");
+		
+		
+        Console.WriteLine("What Would You Like to Order?");
+        Console.WriteLine("Press Enter to See the Menu");
+        Console.ReadLine();
+
+        Item item1 = new Item
+        {
+            name = "Lasagne alla Bolognes",
+            price = 5.99,
+            availability = true,
+            bestSeller = false,
+            discount = 0.0,
+            promo = ""
+        };
+
+        Item item2 = new Item
+        {
+            name = "Fettuccine al Pomodoro",
+            price = 6.49,
+            availability = true,
+            bestSeller = true,
+            discount = 0.1,
+            promo = "Summer Sale"
+        };
+
+        Item item3 = new Item
+        {
+            name = "Gnocchi di Patate",
+            price = 4.99,
+            availability = true,
+            bestSeller = true,
+            discount = 0.3,
+            promo = "None"
+        };
+
+        Item item4 = new Item
+        {
+            name = "Melanzane alla Parmigiana",
+            price = 2.99,
+            availability = true,
+            bestSeller = true,
+            discount = 0.0,
+            promo = "None"
+        };
+
+        Item item5 = new Item
+        {
+            name = "Pollo alla Cacciatora",
+            price = 3.99,
+            availability = true,
+            bestSeller = false,
+            discount = 0.2,
+            promo = "Student's Promo"
+        };
+
+        Item item6 = new Item
+        {
+            name = "Pizza Margherita",
+            price = 2.50,
+            availability = false,
+            bestSeller = true,
+            discount = 0.0,
+            promo = "None"
+        };
+
+        Item item7 = new Item
+        {
+            name = "Costoletta alla Milanese",
+            price = 2.99,
+            availability = true,
+            bestSeller = true,
+            discount = 0.2,
+            promo = "Saturday Promo"
+        };
+
+        Item item8 = new Item
+        {
+            name = "Vitello Tonnato",
+            price = 2.70,
+            availability = false,
+            bestSeller = true,
+            discount = 0.0,
+            promo = "None"
+        };
+
+        Menu menu = new Menu();
+        menu.Add(item1);
+        menu.Add(item2);
+        menu.Add(item3);
+        menu.Add(item4);
+        menu.Add(item5);
+        menu.Add(item6);
+        menu.Add(item7);
+        menu.Add(item8);
+
+        Console.WriteLine("Menu Items:");
+        for (int i = 0; i < menu.items.Count; i++)
+        {
+            Item item = menu.items[i];
+            Console.WriteLine($"[{i + 1}] {item.name} - ${item.price}");
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Please Enter the Item Numbers You Would Like to Order (use comma for multiple order selection):");
+        string input = Console.ReadLine();
+
+
+        string[] itemNumbers = input.Split(',');
+
+        List<Item> selectedItems = new List<Item>();
+
+        foreach (string itemNumber in itemNumbers)
+        {
+            int index = int.Parse(itemNumber.Trim()) - 1;
+
+            if (index >= 0 && index < menu.items.Count)
+            {
+                Item selectedItem = menu.items[index];
+
+                Console.WriteLine();
+                Console.WriteLine($"Name: {selectedItem.name}");
+                Console.WriteLine($"Availability: {(selectedItem.availability ? "In Stock" : "Out of Stock")}");
+                Console.WriteLine($"Best Seller: {(selectedItem.bestSeller ? "Yes" : "No")}");
+                Console.WriteLine($"Discount: {selectedItem.discount * 100}%");
+                Console.WriteLine($"Promo: {selectedItem.promo}");
+                Console.WriteLine();
+
+                selectedItems.Add(selectedItem);
+            }
+        }
+
+        Order order = new Order();
+        order.items = selectedItems;
+        order.estimatedTimeOfOrder = DateTime.Now.AddMinutes(1);
+
+        Console.WriteLine();
+        Console.WriteLine("Order Details:");
+        Console.WriteLine($"Number of Items: {order.items.Count}");
+        Console.WriteLine($"Estimated Time: {order.estimatedTimeOfOrder}");
+        Console.WriteLine();
+
+
+        double totalAmount = 0.0;
+        foreach (Item item in order.items)
+        {
+            totalAmount += item.price;
+        }
+
+        Console.WriteLine($"Total Amount: ${totalAmount}");
+
+        Console.WriteLine("Please enter the payment amount:");
+        double paymentAmount = double.Parse(Console.ReadLine());
+
+        double change = paymentAmount - totalAmount;
+        Console.WriteLine($"Change: ${change}");
+
+
+        Console.WriteLine("Please select a payment method:");
+        Console.WriteLine("[1] Cash");
+        Console.WriteLine("[2] Credit Card");
+        Console.WriteLine("[3] Gcash");
+
+
+        int paymentMethod = int.Parse(Console.ReadLine());
+
+        string modeOfPayment = "";
+
+        switch (paymentMethod)
+        {
+            case 1:
+                modeOfPayment = "Cash";
+                break;
+            case 2:
+                modeOfPayment = "Credit Card";
+                break;
+            case 3:
+                modeOfPayment = "Gcash";
+                break;
+            default:
+                modeOfPayment = "Unknown";
+                break;
+        }
+
+
+        Receipt receipt = new Receipt
+        {
+            item = order.items,
+            totalPrice = totalAmount,
+            dateAndTime = DateTime.Now,
+            change = change,
+            modeOfPayment = modeOfPayment
+        };
+
+        Console.WriteLine();
+        Console.WriteLine("Receipt Details:");
+        Console.WriteLine($"Total Price: ${receipt.totalPrice}");
+        Console.WriteLine($"Date and Time: {receipt.dateAndTime}");
+        Console.WriteLine($"Change: ${receipt.change}");
+        Console.WriteLine($"Mode of Payment: {receipt.modeOfPayment}");
+		Console.ReadLine();
+		
+		Console.WriteLine("Thank You For Dining!Make Sure to Comeback, kami kasi hindi na nag kambak eh");
+    }
+}
