@@ -1,0 +1,14 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+public class Receipt 
+{         
+        public List<Item> item;
+        public double totalPrice;
+        public int quantity;
+        public DateTime dateAndTime;
+        public double change;
+        public string modeOfPayment;    
+}
+
